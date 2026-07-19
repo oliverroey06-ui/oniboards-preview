@@ -536,28 +536,36 @@ export function friendlyAuthError(err) {
    Backend bootstrap (singleton)
    ===================================================================== */
 let _backend = null;
+let _initPromise = null;
 let _readyResolve;
 export const backendReady = new Promise((r) => (_readyResolve = r));
 
-export async function initBackend() {
-  if (_backend) return _backend;
-  // Register the service worker (PWA / offline) when served over http(s).
-  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
-  }
-  if (FIREBASE_ENABLED) {
-    try {
-      const sdk = await loadFirebase();
-      _backend = new FirebaseBackend(sdk);
-    } catch (e) {
-      console.warn("Firebase init failed, falling back to demo mode:", e);
+export function initBackend() {
+  if (_backend) return Promise.resolve(_backend);
+  // If an init is already in flight (e.g. authBoot started it), share that same
+  // promise so concurrent callers all wait for the one initialization instead of
+  // racing ahead and hitting "Backend not initialized".
+  if (_initPromise) return _initPromise;
+  _initPromise = (async () => {
+    // Register the service worker (PWA / offline) when served over http(s).
+    if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
+    if (FIREBASE_ENABLED) {
+      try {
+        const sdk = await loadFirebase();
+        _backend = new FirebaseBackend(sdk);
+      } catch (e) {
+        console.warn("Firebase init failed, falling back to demo mode:", e);
+        _backend = new DemoBackend();
+      }
+    } else {
       _backend = new DemoBackend();
     }
-  } else {
-    _backend = new DemoBackend();
-  }
-  _readyResolve(_backend);
-  return _backend;
+    _readyResolve(_backend);
+    return _backend;
+  })();
+  return _initPromise;
 }
 export function backend() {
   if (!_backend) throw new Error("Backend not initialized — call initBackend() first.");

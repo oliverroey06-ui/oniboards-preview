@@ -88,6 +88,7 @@ function wireLogin() {
     if (!pw) { err.textContent = "Enter your password."; return; }
     const btn = $("#loginBtn"); setLoading(btn, true);
     try {
+      await initBackend();               // ensure the backend is ready before we use it
       await Auth.login(email, pw, remember);
       toast("Signed in", "success");
       location.href = "dashboard.html";
@@ -134,6 +135,7 @@ function wireRegister() {
 
     const btn = $("#registerBtn"); setLoading(btn, true);
     try {
+      await initBackend();               // ensure the backend is ready before we use it
       const user = await Auth.register({ email, password: pw, displayName, username });
       // Seed a rich sample studio ONLY in local demo mode. In a real Firebase
       // deployment new members start clean (the owner invites them to workspaces).
