@@ -2,7 +2,7 @@
    OniSteel Studios Board — Service Worker (PWA / offline)
    Network-first for pages & data, cache-first for static assets.
    ============================================================ */
-const CACHE = "onisteel-v1";
+const CACHE = "onisteel-v2";
 const CORE = [
   "./", "./index.html", "./dashboard.html", "./board.html", "./workspace.html",
   "./calendar.html", "./chat.html", "./profile.html", "./settings.html",
