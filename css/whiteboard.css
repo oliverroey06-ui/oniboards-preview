@@ -1,0 +1,38 @@
+/* ============================================================
+   OniSteel Studios Board — Whiteboard
+   ============================================================ */
+.content-pad:has(.wb-shell) { padding: 0 !important; height: 100%; }
+.wb-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.wb-toolbar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; background: rgba(15,15,16,.6); backdrop-filter: blur(12px); z-index: 5; }
+.wb-tools { display: flex; gap: 3px; background: rgba(0,0,0,.25); border-radius: var(--r-md); padding: 3px; }
+.wb-tool { width: 36px; height: 34px; border-radius: 8px; border: none; background: transparent; color: var(--text-2); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--dur-fast); }
+.wb-tool svg { width: 18px; height: 18px; }
+.wb-tool:hover { background: rgba(255,255,255,.08); color: var(--text); }
+.wb-tool.active { background: rgba(77,107,145,.3); color: #fff; }
+.wb-sep { width: 1px; height: 26px; background: var(--line); }
+.wb-colors { display: flex; gap: 5px; }
+.wb-color { width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform var(--dur-fast); }
+.wb-color:hover { transform: scale(1.15); }
+.wb-color.on { border-color: #fff; box-shadow: 0 0 0 2px var(--steel); }
+.wb-hint { margin-left: auto; }
+@media (max-width: 700px) { .wb-hint { display: none; } }
+
+.wb-canvas-wrap { flex: 1; overflow: auto; background: var(--bg-0);
+  background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 24px 24px; min-height: 0; }
+.wb-board { position: relative; background: transparent; }
+.wb-svg { position: absolute; inset: 0; touch-action: none; }
+.wb-overlay { position: absolute; inset: 0; pointer-events: none; }
+.wb-board[data-tool="select"] { cursor: default; }
+.wb-board[data-tool="pen"], .wb-board[data-tool="rect"], .wb-board[data-tool="ellipse"], .wb-board[data-tool="arrow"] { cursor: crosshair; }
+.wb-board[data-tool="eraser"] { cursor: cell; }
+.wb-board[data-tool="text"], .wb-board[data-tool="sticky"] { cursor: copy; }
+
+.wb-sticky { position: absolute; pointer-events: auto; border-radius: 10px; box-shadow: var(--sh-md); display: flex; flex-direction: column; color: #1a1a1c; overflow: hidden; }
+.sticky-bar { height: 22px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; cursor: move; background: rgba(0,0,0,.08); }
+.sticky-grip svg { width: 14px; height: 14px; opacity: .5; }
+.sticky-del { border: none; background: transparent; cursor: pointer; color: rgba(0,0,0,.5); display: flex; }
+.sticky-del svg { width: 13px; height: 13px; }
+.sticky-text { flex: 1; padding: 8px 10px; outline: none; font-size: 13px; font-weight: 600; line-height: 1.4; overflow: auto; }
+.wb-text-el { position: absolute; pointer-events: auto; font-size: 20px; font-weight: 700; outline: none; padding: 2px 4px; cursor: move; white-space: nowrap; min-width: 20px; }
+.wb-text-el:focus { background: rgba(77,107,145,.15); border-radius: 4px; }

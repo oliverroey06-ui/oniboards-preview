@@ -1,0 +1,36 @@
+rules_version = '2';
+/* ============================================================
+   OniSteel Studios Board — Firebase Storage Security Rules
+   Deploy with:  firebase deploy --only storage
+   ------------------------------------------------------------
+   Authenticated users may read/write assets under a workspace
+   path. File size is capped to protect the free tier.
+   ============================================================ */
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() { return request.auth != null; }
+    function sizeOK() { return request.resource.size < 50 * 1024 * 1024; } // 50 MB cap
+    function typeOK() {
+      return request.resource.contentType.matches('image/.*')
+          || request.resource.contentType.matches('video/.*')
+          || request.resource.contentType.matches('audio/.*')
+          || request.resource.contentType.matches('application/.*')
+          || request.resource.contentType.matches('text/.*');
+    }
+
+    match /workspaces/{workspaceId}/{allPaths=**} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && sizeOK() && typeOK();
+      allow delete: if isSignedIn();
+    }
+
+    // User avatars / banners
+    match /users/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn() && request.auth.uid == userId && sizeOK();
+    }
+
+    match /{allPaths=**} { allow read, write: if false; }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "OniSteel Studios Board",
+  "short_name": "OniSteel",
+  "description": "Game development project management platform by OniSteel Studios.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0F0F10",
+  "theme_color": "#0F0F10",
+  "icons": [
+    { "src": "assets/images/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/images/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

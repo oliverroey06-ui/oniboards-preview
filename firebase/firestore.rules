@@ -1,0 +1,92 @@
+rules_version = '2';
+/* ============================================================
+   OniSteel Studios Board — Firestore Security Rules
+   Deploy with:  firebase deploy --only firestore:rules
+   ------------------------------------------------------------
+   Model: workspace-scoped collections are readable/writable by
+   members of that workspace. Users manage their own profile &
+   notifications. Membership is verified via the /members docs
+   (id = "{workspaceId}__{userId}").
+   ============================================================ */
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isMember(workspaceId) {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/members/$(workspaceId + "__" + request.auth.uid));
+    }
+    function memberRoleTier(workspaceId) {
+      let m = get(/databases/$(database)/documents/members/$(workspaceId + "__" + request.auth.uid)).data;
+      return m.roleTier is int ? m.roleTier : 50;
+    }
+    function incomingWs() {
+      return request.resource.data.workspaceId;
+    }
+    function existingWs() {
+      return resource.data.workspaceId;
+    }
+
+    /* ---------- Users ---------- */
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update, delete: if isSignedIn() && request.auth.uid == userId;
+    }
+
+    /* ---------- Workspaces ---------- */
+    match /workspaces/{wsId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if isMember(wsId);
+    }
+
+    /* ---------- Membership ---------- */
+    match /members/{memberId} {
+      allow read: if isSignedIn();
+      // A user may add themselves; existing members may manage others.
+      allow create: if isSignedIn() &&
+        (request.resource.data.userId == request.auth.uid || isMember(request.resource.data.workspaceId));
+      allow update, delete: if isSignedIn() && isMember(resource.data.workspaceId);
+    }
+
+    /* ---------- Invites ---------- */
+    match /invites/{inviteId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    /* ---------- Workspace-scoped content ---------- */
+    match /boards/{id}     { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /tasks/{id}      { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /comments/{id}   { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /channels/{id}   { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /messages/{id}   { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /docs/{id}       { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /files/{id}      { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /activity/{id}   { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /timeEntries/{id}{ allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+    match /wbElements/{id} { allow read, write: if isSignedIn() && (isMember(incomingWs()) || isMember(existingWs())); }
+
+    /* Notes: owner-private unless shared to the workspace */
+    match /notes/{id} {
+      allow read: if isSignedIn() && (resource.data.ownerId == request.auth.uid || resource.data.shared == true);
+      allow create: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+    }
+
+    /* Notifications & presence helpers: user-owned */
+    match /notifications/{id} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+    match /typing/{id} { allow read: if isSignedIn(); allow write: if isSignedIn(); }
+    match /reads/{id}  { allow read: if isSignedIn(); allow write: if isSignedIn(); }
+
+    /* Fallback: deny anything not matched above */
+    match /{document=**} { allow read, write: if false; }
+  }
+}

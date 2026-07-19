@@ -1,0 +1,42 @@
+/* ============================================================
+   OniSteel Studios Board — File Manager
+   ============================================================ */
+.files-layout { display: flex; gap: 20px; align-items: flex-start; }
+.files-nav { width: 220px; flex: none; position: sticky; top: 12px; }
+@media (max-width: 760px) { .files-nav { display: none; } }
+.fn-section { margin-bottom: 18px; }
+.fn-title { font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim); font-weight: 700; padding: 6px 10px; }
+.fn-item { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: var(--r-md); cursor: pointer; color: var(--text-2); font-weight: 600; font-size: 13px; transition: background var(--dur-fast); margin-bottom: 2px; }
+.fn-item svg { width: 15px; height: 15px; } .fn-item .dim { margin-left: auto; font-size: 11px; }
+.fn-item:hover { background: rgba(255,255,255,.05); }
+.fn-item.active { background: rgba(77,107,145,.2); color: var(--text); }
+.fn-storage { padding: 12px 10px; border-top: 1px solid var(--line); margin-top: 10px; }
+
+.drop-zone { border-radius: var(--r-lg); transition: box-shadow var(--dur); min-height: 300px; position: relative; }
+.drop-zone.drag-active { box-shadow: inset 0 0 0 2px var(--steel), 0 0 40px rgba(77,107,145,.2); }
+.drop-zone.drag-active::before { content: "Drop files to upload"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(77,107,145,.1); border-radius: var(--r-lg); font-weight: 700; color: var(--steel-light); z-index: 5; pointer-events: none; }
+
+.file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.file-card { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; cursor: pointer; background: var(--surface-glass); transition: transform var(--dur), box-shadow var(--dur), border-color var(--dur); }
+.file-card:hover { transform: translateY(-2px); box-shadow: var(--sh-md); border-color: var(--line-steel); }
+.fc-preview { height: 120px; display: flex; align-items: center; justify-content: center; position: relative; background: var(--bg-3); overflow: hidden; }
+.fc-preview img { width: 100%; height: 100%; object-fit: cover; }
+.fc-ic svg { width: 40px; height: 40px; }
+.fc-ext { position: absolute; bottom: 6px; left: 6px; font-size: 9.5px; font-weight: 800; text-transform: uppercase; background: rgba(0,0,0,.6); color: #fff; padding: 2px 6px; border-radius: 5px; letter-spacing: .04em; }
+.fc-menu { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,.5); opacity: 0; }
+.file-card:hover .fc-menu { opacity: 1; }
+.fc-body { padding: 10px 11px; }
+.fc-name { font-size: 13px; font-weight: 600; }
+.fc-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-3); margin-top: 3px; }
+
+.file-list .list-table { width: 100%; }
+.fl-name { display: flex; align-items: center; gap: 9px; font-weight: 600; }
+.fl-ic svg { width: 17px; height: 17px; }
+
+.preview-stage { background: var(--bg-0); border-radius: var(--r-md); min-height: 280px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; overflow: hidden; }
+.preview-media { max-width: 100%; max-height: 460px; border-radius: 8px; }
+.preview-audio { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 40px; color: var(--steel-light); }
+.preview-audio svg { width: 48px; height: 48px; }
+.preview-placeholder { display: flex; flex-direction: column; align-items: center; padding: 60px; }
+.preview-placeholder svg { width: 64px; height: 64px; }
+.preview-info { }

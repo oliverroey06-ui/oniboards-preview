@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="os-steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8FAFD6"/>
+      <stop offset=".5" stop-color="#4D6B91"/>
+      <stop offset="1" stop-color="#243549"/>
+    </linearGradient>
+    <linearGradient id="os-horn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#B9CCE4"/>
+      <stop offset="1" stop-color="#3D5473"/>
+    </linearGradient>
+    <filter id="os-glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="1.8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- horns -->
+  <path d="M15 2 L24 16 L12 20 Z" fill="url(#os-horn)"/>
+  <path d="M49 2 L40 16 L52 20 Z" fill="url(#os-horn)"/>
+  <!-- face plate -->
+  <path d="M8 18 L56 18 L60 32 L50 58 L37 62 L27 62 L14 58 L4 32 Z" fill="url(#os-steel)"/>
+  <!-- right facet shading -->
+  <path d="M32 18 L56 18 L60 32 L50 58 L37 62 L32 62 Z" fill="#0F0F10" opacity=".22"/>
+  <!-- center ridge -->
+  <path d="M32 18 L34 40 L32 46 L30 40 Z" fill="#0F0F10" opacity=".28"/>
+  <!-- forehead mark -->
+  <path d="M32 21 L35.2 26 L32 31 L28.8 26 Z" fill="#C12A2A"/>
+  <!-- eyes -->
+  <g filter="url(#os-glow)">
+    <path d="M13.5 33 L28 29.5 L26 38.5 L16 39.5 Z" fill="#C12A2A"/>
+    <path d="M50.5 33 L36 29.5 L38 38.5 L48 39.5 Z" fill="#C12A2A"/>
+  </g>
+  <path d="M15.5 34 L26.5 31.4 L25.2 36.8 L17.2 37.6 Z" fill="#FF6B5E" opacity=".85"/>
+  <path d="M48.5 34 L37.5 31.4 L38.8 36.8 L46.8 37.6 Z" fill="#FF6B5E" opacity=".85"/>
+  <!-- mouth slot + teeth -->
+  <path d="M20 47 L44 47 L40.5 55 L23.5 55 Z" fill="#101114"/>
+  <path d="M23.5 47 L26 51.5 L28.5 47 Z M29.5 47 L32 51.5 L34.5 47 Z M35.5 47 L38 51.5 L40.5 47 Z" fill="url(#os-steel)"/>
+  <path d="M26.2 55 L28 51.8 L29.8 55 Z M32.2 55 L34 51.8 L35.8 55 Z" fill="url(#os-steel)"/>
+</svg>

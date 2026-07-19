@@ -1,0 +1,81 @@
+/* ============================================================
+   OniSteel Studios Board — Dashboard & Analytics
+   ============================================================ */
+.dash-loading { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.dash-hero { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+.dash-greet { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+.dash-quick { display: flex; gap: 8px; flex-wrap: wrap; }
+.panel-h { font-size: 14px; font-weight: 700; }
+
+.dash-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 18px; align-items: start; }
+@media (max-width: 1050px) { .dash-grid { grid-template-columns: 1fr; } }
+.dash-col-main, .dash-col-side { display: flex; flex-direction: column; gap: 18px; }
+
+/* Chart text */
+.chart-axis { fill: var(--text-dim); font-size: 10px; font-weight: 600; }
+.chart-val { fill: var(--text-2); font-size: 10px; font-weight: 700; }
+.donut-top { fill: var(--text); font-size: 22px; font-weight: 800; font-family: var(--font-display); }
+.donut-sub { fill: var(--text-3); font-size: 11px; }
+.gauge-val { fill: var(--text); font-size: 22px; font-weight: 800; font-family: var(--font-display); }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; justify-content: center; }
+.cl-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2); }
+.cl-dot { width: 9px; height: 9px; border-radius: 3px; }
+.cl-item b { color: var(--text); }
+
+/* Horizontal bars */
+.hbars { display: flex; flex-direction: column; gap: 12px; }
+.hbar-row { display: grid; grid-template-columns: 120px 1fr 46px; gap: 10px; align-items: center; }
+.hbar-label { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text-2); }
+.hbar-track { height: 8px; border-radius: 5px; background: rgba(255,255,255,.07); overflow: hidden; }
+.hbar-fill { height: 100%; border-radius: 5px; transition: width var(--dur-slow) var(--ease-out); }
+.hbar-val { font-size: 12px; font-weight: 700; text-align: right; color: var(--text-2); }
+
+/* My tasks */
+.dash-task { display: flex; align-items: center; gap: 11px; padding: 10px; border-radius: var(--r-md); cursor: pointer; transition: background var(--dur-fast); border-left: 3px solid var(--p); }
+.dash-task:hover { background: rgba(255,255,255,.04); }
+.dt-title { font-weight: 600; font-size: 13.5px; }
+
+/* Deadlines */
+.deadline-row { display: flex; align-items: center; gap: 12px; padding: 9px; border-radius: var(--r-md); cursor: pointer; transition: background var(--dur-fast); }
+.deadline-row:hover { background: rgba(255,255,255,.04); }
+.dl-date { width: 42px; height: 46px; border-radius: 10px; background: rgba(77,107,145,.16); display: flex; flex-direction: column; align-items: center; justify-content: center; flex: none; }
+.deadline-row.overdue .dl-date { background: rgba(193,42,42,.18); }
+.dl-day { font-size: 17px; font-weight: 800; line-height: 1; }
+.dl-mon { font-size: 9px; text-transform: uppercase; color: var(--text-3); font-weight: 700; }
+
+/* Activity / files / notifs / chat mini */
+.act-item, .chat-mini, .dash-notif { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.act-item:last-child, .chat-mini:last-child, .dash-notif:last-child { border-bottom: none; }
+.file-row-mini { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); color: var(--text); }
+.file-row-mini:last-child { border-bottom: none; }
+.file-row-mini:hover { text-decoration: none; }
+.frm-ic, .dn-ic { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex: none; }
+.frm-ic svg { width: 16px; height: 16px; }
+.dn-ic { background: rgba(77,107,145,.14); color: var(--steel-light); }
+.dn-ic svg { width: 15px; height: 15px; }
+.dash-notif.unread { background: rgba(77,107,145,.06); border-radius: 8px; padding: 8px; }
+
+/* Mini calendar */
+.mini-cal { }
+.mc-dow { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 6px; }
+.mc-dow span { text-align: center; font-size: 10px; color: var(--text-dim); font-weight: 700; }
+.mc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.mc-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-2); border-radius: 7px; position: relative; }
+.mc-cell.out { color: var(--text-dim); }
+.mc-cell.today { background: var(--crimson); color: #fff; font-weight: 800; }
+.mc-dot { position: absolute; bottom: 3px; width: 4px; height: 4px; border-radius: 50%; background: var(--steel-light); }
+.mc-cell.today .mc-dot { background: #fff; }
+
+/* Heatmap */
+.heatmap { display: flex; gap: 3px; }
+.hm-col { display: flex; flex-direction: column; gap: 3px; }
+.hm-cell { width: 13px; height: 13px; border-radius: 3px; background: rgba(255,255,255,.05); }
+.hm-cell.lvl-1 { background: rgba(77,107,145,.35); } .hm-cell.lvl-2 { background: rgba(77,107,145,.6); }
+.hm-cell.lvl-3 { background: rgba(77,107,145,.85); } .hm-cell.lvl-4 { background: var(--steel-light); }
+
+/* Analytics specific */
+.analytics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+@media (max-width: 900px) { .analytics-grid { grid-template-columns: 1fr; } }
+.metric-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+@media (max-width: 800px) { .metric-row { grid-template-columns: repeat(2, 1fr); } }
+.velocity-num { font-size: 34px; font-weight: 800; font-family: var(--font-display); }

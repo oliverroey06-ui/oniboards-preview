@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Calendar — OniSteel Studios Board</title>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/calendar.css">
+</head>
+<body>
+  <script type="module">
+    import { initApp } from "./js/app.js";
+    import { initCalendarPage } from "./js/calendar.js";
+    (async () => { const ctx = await initApp({ active: "calendar", title: "Calendar" }); if (ctx) initCalendarPage(); })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In — OniSteel Studios Board</title>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <style>
+    .solo { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; position:relative;
+      background: radial-gradient(1000px 700px at 50% -10%, rgba(77,107,145,.22), transparent 60%), var(--bg-0); }
+    .solo .auth-card { background:var(--surface-glass); backdrop-filter:blur(24px); border:1px solid var(--line-strong); border-radius:var(--r-xl); box-shadow:var(--sh-lg); padding:36px 32px; }
+  </style>
+</head>
+<body>
+  <div class="solo">
+    <div class="backend-chip" id="backendChip"></div>
+    <div class="auth-card">
+      <div class="ac-mobile-brand" style="display:flex">
+        <img src="assets/images/logo.svg" alt="OniSteel">
+        <div style="font-family:var(--font-display);font-weight:800;letter-spacing:.06em">ONI<span style="color:var(--steel-light)">STEEL</span></div>
+      </div>
+      <div class="auth-head center"><h1 id="authTitle">Welcome back</h1><p id="authSub">Sign in to your OniSteel workspace.</p></div>
+
+      <div class="auth-panel" data-name="login">
+        <form id="loginForm" novalidate>
+          <div class="field"><label>Email</label><div class="input-group"><span class="in-icon" id="i1"></span><input class="input" id="loginEmail" type="email" placeholder="you@studio.com"></div></div>
+          <div class="field"><label>Password</label><div class="input-group pw-field"><span class="in-icon" id="i2"></span><input class="input" id="loginPassword" type="password" placeholder="••••••••"><button type="button" class="iconbtn pw-toggle"></button></div></div>
+          <div class="remember-row"><label><input type="checkbox" id="loginRemember" checked> Remember me</label><a href="#" data-panel="forgot" class="btn link">Forgot?</a></div>
+          <div class="field-error" id="loginError"></div>
+          <button class="btn primary block lg" id="loginBtn" type="submit">Sign in</button>
+        </form>
+        <div class="auth-divider">or</div>
+        <button class="btn ghost block" id="googleBtn" onclick="OniAuth.loginGoogle()" style="margin-bottom:10px"><svg viewBox="0 0 48 48" style="width:18px;height:18px"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google</button>
+        <button class="btn ghost block" id="demoBtn" onclick="OniAuth.launchDemo()">Launch instant demo</button>
+        <div class="auth-alt">New here? <a href="register.html">Create an account</a></div>
+      </div>
+
+      <div class="auth-panel hidden" data-name="forgot">
+        <form id="forgotForm" novalidate>
+          <div class="field"><label>Email</label><div class="input-group"><span class="in-icon" id="i3"></span><input class="input" id="forgotEmail" type="email" placeholder="you@studio.com"></div></div>
+          <div class="field-error" id="forgotError"></div>
+          <button class="btn primary block lg" id="forgotBtn" type="submit">Send reset link</button>
+        </form>
+        <div class="auth-alt"><a href="#" data-panel="login">← Back to sign in</a></div>
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    import { initAuthCard } from "./js/auth.js";
+    import { icon } from "./js/icons.js";
+    document.getElementById("i1").innerHTML = icon("mail");
+    document.getElementById("i2").innerHTML = icon("lock");
+    document.getElementById("i3").innerHTML = icon("mail");
+    document.querySelectorAll(".pw-toggle").forEach(b => b.innerHTML = icon("eye"));
+    initAuthCard("login");
+  </script>
+</body>
+</html>
